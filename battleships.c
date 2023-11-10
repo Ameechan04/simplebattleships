@@ -36,12 +36,15 @@ int main (void) {
 
 
  //print the board
+print_board(board);
+	/*
 		for (int r = 0; r < 10; r++) {
 			for (int c = 0; c < 12; c++) {
 				printf("%c", board[r][c]);
 			}
 			printf("\n");
 		}
+	*/
 		
 printf("Enter a position to mark as your ship. \n");
 scanf(" %d", &x);
@@ -58,4 +61,15 @@ board[x][y] = 'X';
 
 
 return 0;
+}
+
+void print_board(char board[10][12]) {
+    for (int r = 0; r < 10; r++) {
+			for (int c = 0; c < 12; c++) {
+				printf("%c", board[r][c]);
+			}
+			printf("\n");
+		}
+    
+
 }
