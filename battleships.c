@@ -10,7 +10,7 @@
 #include <stdlib.h>
 //#include "functions.h"
 int main (void) {
-
+    char x, y;
  //Create the board
   char board[10][12] = 
         {{'9', ' ', '\0', '\0','\0','\0','\0','\0','\0','\0', '\0'},	//0
@@ -33,7 +33,18 @@ int main (void) {
 			}
 			printf("\n");
 		}
+		
+printf("Enter a position to mark as your ship. \n");
+scanf("%d", x);
+scanf("%d", y);
+board[x][y] = 'X';
 
+	for (int r = 0; r < 10; r++) {
+			for (int c = 0; c < 12; c++) {
+				printf("%c", board[r][c]);
+			}
+			printf("\n");
+		}
 
 return 0;
 }
