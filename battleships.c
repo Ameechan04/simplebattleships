@@ -13,7 +13,7 @@ int main (void) {
     int rows = 10;
     int columns = 12;
     
-    int x, y;
+    int R, C;
  //Create the board
  char board[10][12] = 
         {{'9', ' ', '\0', '\0','\0','\0','\0','\0','\0','\0', '\0'},	//0
@@ -29,47 +29,47 @@ int main (void) {
 
  
 
-  
+
 
  printf("\n SIMPLE CHESS BY ANDREW MEECHAN \n \n");
 
-
+  print_board(board);
 
  //print the board
-print_board(board);
-	/*
+ /*
 		for (int r = 0; r < 10; r++) {
 			for (int c = 0; c < 12; c++) {
 				printf("%c", board[r][c]);
 			}
 			printf("\n");
 		}
-	*/
+		*/
 		
 printf("Enter a position to mark as your ship. \n");
-scanf(" %d", &x);
-scanf(" %d", &y);
-board[x][y] = 'X';
 
-	for (int r = 0; r < 10; r++) {
-			for (int c = 0; c < 12; c++) {
-				printf("%c", board[r][c]);
-			}
-			printf("\n");
-		}
-		
+//input for x must be => 0 AND <= 8
+printf("enter row: ");
+scanf(" %d", &R);
+//input for y must be => 2 AND =< 11
+printf("enter column: ");
+scanf(" %d", &C);
+board[R][C] = 'X';
+
+print_board(board);
 
 
 return 0;
 }
 
 void print_board(char board[10][12]) {
+    printf("\n \n");
     for (int r = 0; r < 10; r++) {
 			for (int c = 0; c < 12; c++) {
 				printf("%c", board[r][c]);
 			}
 			printf("\n");
 		}
+		printf("\n");
     
 
 }
