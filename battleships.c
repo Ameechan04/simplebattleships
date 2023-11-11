@@ -1,10 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 void print_board(char B[10][12]);
 int check_empty_spot(char board[10][12], int row, int column);
 int validate_orientation(char board[10][12], int r, int c, int end_R, int end_C, char orientation);
 void ai_create_board(char bot_board[10][12]);
+int shoot(int row, int column, char b[10][12]);
 
 /* 
  * A simple game of battleships
@@ -174,9 +176,9 @@ do {
         
         //TODO input validation and conversion
         printf("Enter the target row!");
-        scanf(%d, target_row);
+        scanf("%d", target_row);
         printf("Enter the target column!");
-        scanf(%d, target_column);
+        scanf("%d", target_column);
         shoot(target_row, target_column, bot_board);    //human shoots at bot board
         
     } else {
@@ -188,10 +190,10 @@ do {
     bot_X_counter = 0;
     for (int r = 0; r < 10; r++) {
 		for (int c = 0; c < 12; c++) {
-			if (board[r][c] == X) {
+			if (board[r][c] == 'X') {
 			    X_counter++;
 			}
-			if (bot_board[r][c] == X) {
+			if (bot_board[r][c] == 'X') {
 			    bot_X_counter++;
 			}
 		}
@@ -199,11 +201,11 @@ do {
 	
 	if (bot_X_counter == 0) {
 	    game_over = 1;
-	    printf("THE BOT IS VICTORIOUS!")
+	    printf("THE BOT IS VICTORIOUS!");
 	}
 	if (X_counter == 0) {
 	    game_over = 1;
-	    printf("YOU ARE VICTORIOUS!")
+	    printf("YOU ARE VICTORIOUS!");
 	}
     
     
@@ -429,16 +431,13 @@ do {
 }
 } while (!valid);
 
-//validate_orientation(bot_board, R, C, end_R, end_C, input);
-
-
 print_board(bot_board);
-printf("One loop..");
+
 }//FOR LOOP
     
 }
 
-int shoot(int row, int column, int b[10][12]) {
+int shoot(int row, int column, char b[10][12]) {
     if (b[row][column] == 'X') {
         //target hit then:
         printf("\n The shot at %d %d was a hit! \n", row, column);
