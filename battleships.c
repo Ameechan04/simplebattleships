@@ -92,25 +92,38 @@ if (!check_empty_spot(board, R, C)) {
 
 board[R][C] = 'X';
 valid = 0;
-int end_X = -1;
-int end_Y = -1;
+int end_C = -1;
+int end_R = -1;
 char input;
+
+printf("Enter the ships orientation. \n");
+printf("Enter L, R, U or D. \n");
 do {
-    printf("Enter the ships orientation. \n");
-    printf("Enter L, R, U or D. \n");
-    scanf(%s, input);
+    scanf(" %c", &input);
     switch (input) {
-        case L:
-        
-        case R:
-        
-        case U:
-        
-        case D:
+        case 'L':
+            end_C = C - 2;
+            valid = 1;
+            break;
+        case 'R':
+            end_C = C + 2;
+            valid = 1;
+            break;
+        case 'U':
+            end_R = R + 2;
+            valid = 1;
+            break;
+        case 'D':
+           end_R = R - 2;
+           valid = 1;
+           break;
+        default:
+            printf("Invalid. Enter L, R, U or D: ");
+            valid = 0;
+            break;
     }
-    
-    
 } while (!valid);
+
 
 print_board(board);
 }
@@ -139,4 +152,4 @@ int check_empty_spot(char board[10][12], int row, int column) {
     
 }
 
-int validate_orientation
+//int validate_orientation
