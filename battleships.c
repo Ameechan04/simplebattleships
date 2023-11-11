@@ -20,9 +20,20 @@ int main (void) {
     int valid = 0;
     char character;
     int R, C;
-    int numberOrientationFails = 0;
  //Create the board
  char board[10][12] = 
+        {{'9', ' ', '\0', '\0','\0','\0','\0','\0','\0','\0', '\0'},	//0
+        {'8', ' ','\0','\0','\0','\0','\0','\0','\0', '\0', '\0'},	//1
+	    {'7', ' ', '\0','\0','\0','\0','\0','\0','\0', '\0', '\0'},	//2
+		{'6', ' ', '\0', '\0','\0','\0','\0','\0','\0','\0', '\0'},	//3
+		{'5', ' ', '\0', '\0','\0','\0','\0','\0','\0','\0','\0'},	//4
+		{'4', ' ', '\0', '\0','\0','\0','\0','\0','\0','\0', '\0'},	//5
+		{'3', ' ', '\0', '\0','\0','\0','\0','\0','\0','\0', '\0'},	//6
+		{'2', ' ', '\0', '\0','\0','\0','\0','\0','\0','\0', '\0'},	//7
+	 {'1', ' ', '\0', '\0','\0','\0','\0','\0','\0','\0', '\0'},	//8
+		{' ', ' ', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'}};	//9
+
+char bot_board[10][12] = 
         {{'9', ' ', '\0', '\0','\0','\0','\0','\0','\0','\0', '\0'},	//0
         {'8', ' ','\0','\0','\0','\0','\0','\0','\0', '\0', '\0'},	//1
 	    {'7', ' ', '\0','\0','\0','\0','\0','\0','\0', '\0', '\0'},	//2
@@ -38,7 +49,7 @@ int main (void) {
 
 
 
- printf("\n SIMPLE BATTLESHIPS BY ANDREW MEECHAN \n \n");
+ printf("\n SIMPLE CHESS BY ANDREW MEECHAN \n \n");
 
   print_board(board);
 
@@ -52,7 +63,7 @@ int main (void) {
 		}
 		*/
 		
-for (int i = 0; i < 3; i++) {
+for (int i = 0; i < 5; i++) {
 printf("Enter a position to mark as your ship. \n");
 
 do {
@@ -69,8 +80,6 @@ if (R >= 0 && R <=8) {
 } else {
     printf("invalid. Re-enter a correct row: ");
 }
-
-
 } while (!valid);
 //input for C must be => 2 AND =< 11
 valid = 0; //reset valid to false
@@ -95,8 +104,12 @@ if (!check_empty_spot(board, R, C)) {
     valid = 1;
 }
 } while (!valid);
-board[R][C] = 'X';
 
+
+
+
+
+board[R][C] = 'X';
 valid = 0;
 int end_C = -1;
 int end_R = -1;
@@ -108,51 +121,42 @@ do {
     scanf(" %c", &input);
     switch (input) {
     case 'L':
-        //printf("C: %d ", C);
+        printf("C: %d ", C);
         end_C = C - 2;
         end_R = R;
         valid = 1;
-        //printf("END C: %d", end_C);
+        printf("END C: %d", end_C);
         break;
     case 'R':
-         //printf("C: %d ", C);
+         printf("C: %d ", C);
         end_C = C + 2;
         end_R = R;
         valid = 1;
-        //printf("END C: %d", end_C);
+        printf("END C: %d", end_C);
         break;
     case 'U':
-     //printf("R: %d ", R);
+     printf("R: %d ", R);
         end_R = R - 2;
           end_C = C;
         valid = 1;
-       //    printf("END R: %d", end_R);
+           printf("END R: %d", end_R);
         break;
     case 'D':
-    //    printf("R: %d ", R);
+        printf("R: %d ", R);
         end_R = R + 2;
           end_C = C;
         valid = 1;
-      //     printf("END R: %d", end_R);
+           printf("END R: %d", end_R);
         break;
     default:
         printf("Invalid. Enter L, R, U or D: ");
         valid = 0;
         break;
 }
-  //  printf("\n \n R: %d END R: %d C: %d END C: %d", R, end_R, C, end_C);
-    if (!validate_orientation(board, R, C, end_R, end_C, input)) {
-    printf("The orientation %c is invalid. Enter another: ", input);
-    valid = 0;
-} else {
-    valid = 1;
-}
-    
-    
-    
+    printf("\n \n R: %d END R: %d C: %d END C: %d", R, end_R, C, end_C);
 } while (!valid);
 
-
+validate_orientation(board, R, C, end_R, end_C, input);
 
 
 print_board(board);
@@ -194,6 +198,7 @@ int validate_orientation(char board[10][12], int R, int C, int end_R, int end_C,
 		if ((end_C >= 2 && end_C <= 11) && (end_R >= 0 && end_R <= 8)) {
 		    
 		    //VALID!
+		    printf("changing...");
 		    	
 		    	if (board[end_R][end_C] == 'X') {
 		    	    printf("Space is already occupied! 0");
@@ -239,10 +244,10 @@ int validate_orientation(char board[10][12], int R, int C, int end_R, int end_C,
 		    	        printf("something went wrong !");
 		    	    
 		    	}
-		  
+		    
 		    return 1;
 		}  else {
-		   printf("\nThis orientation makes the ship fall off the board. \n");
+		    printf("This orientation makes the ship fall off the board.");
 		    return 0;
 		    
 		}
@@ -250,3 +255,126 @@ int validate_orientation(char board[10][12], int R, int C, int end_R, int end_C,
 
 }
 
+void ai_create_board(char bot_board[10][12]) {
+    int max_R = 8;
+    int max_C = 11;
+    
+    for (int i = 0; i < 5; i++) {
+    
+do {
+    
+
+//input for R must be => 0 AND <= 8
+
+
+do {
+//convert row entered into usable format for the 2D array:
+ int R = rand() % (max_R + 1); 
+if (R >= 0 && R <=8) {
+    valid = 1;
+} else {
+    printf("invalid. Re-enter a correct row: ");
+}
+} while (!valid);
+//input for C must be => 2 AND =< 11
+valid = 0; //reset valid to false
+
+do {
+scanf(" %c", &character);
+//Converted the input into array form
+int C  = rand() % (max_C - 2 + 1) + 2;   
+if (C >= 2 && C <= 11) {
+    valid = 1;
+} else {
+  //  printf("invalid. Re-enter a correct column: ");
+}
+} while (!valid);
+valid = 0;
+if (!check_empty_spot(board, R, C)) {
+  
+    valid = 0;
+} else {
+    valid = 1;
+}
+} while (!valid);
+
+
+
+
+
+bot_board[R][C] = 'X';
+valid = 0;
+int end_C = -1;
+int end_R = -1;
+char input;
+
+//printf("Enter the ships orientation. \n");
+//printf("Enter L, R, U or D: ");
+
+int upper_bound = 4;
+lower_bound = 1;
+do {
+    //scanf(" %c", &input);
+    int value = rand() % (upper_bound - lower_bound + 1) 
+                    + lower_bound; 
+                    
+    switch (value)      {
+        case 1:
+            input = 'L';
+            break;
+         case 2:
+            input = 'R';
+            break;
+        case 3:
+            input = 'U';
+            break;
+         case 4:
+            input = 'D';
+            break;
+    }         
+                    
+    
+    switch (input) {
+    case 'L':
+      
+        end_C = C - 2;
+        end_R = R;
+        valid = 1;
+       
+        break;
+    case 'R':
+        
+        end_C = C + 2;
+        end_R = R;
+        valid = 1;
+        
+        break;
+    case 'U':
+    
+        end_R = R - 2;
+          end_C = C;
+        valid = 1;
+           
+        break;
+    case 'D':
+      
+        end_R = R + 2;
+          end_C = C;
+        valid = 1;
+         
+        break;
+    default:
+        printf("Invalid. Enter L, R, U or D: ");
+        valid = 0;
+        break;
+}
+   // printf("\n \n R: %d END R: %d C: %d END C: %d", R, end_R, C, end_C);
+} while (!valid);
+
+validate_orientation(board, R, C, end_R, end_C, input);
+
+
+print_board(bot_board);
+}//FOR LOOP
+    
+}
