@@ -4,6 +4,7 @@
 void print_board(char B[10][12]);
 int check_empty_spot(char board[10][12], int row, int column);
 int validate_orientation(char board[10][12], int r, int c, int end_R, int end_C, char orientation);
+void ai_create_board(char bot_board[10][12]);
 
 /* 
  * A simple game of battleships
@@ -45,7 +46,7 @@ char bot_board[10][12] =
 	 {'1', ' ', '\0', '\0','\0','\0','\0','\0','\0','\0', '\0'},	//8
 		{' ', ' ', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'}};	//9
 
- 
+ ai_create_board(bot_board);
 
 
 
@@ -258,7 +259,8 @@ int validate_orientation(char board[10][12], int R, int C, int end_R, int end_C,
 void ai_create_board(char bot_board[10][12]) {
     int max_R = 8;
     int max_C = 11;
-    
+    int valid = 0;
+    int R, C;
     for (int i = 0; i < 5; i++) {
     
 do {
@@ -269,7 +271,8 @@ do {
 
 do {
 //convert row entered into usable format for the 2D array:
- int R = rand() % (max_R + 1); 
+  R = rand() % (max_R + 1); 
+  printf("R IS: %d \n", R );
 if (R >= 0 && R <=8) {
     valid = 1;
 } else {
@@ -280,9 +283,10 @@ if (R >= 0 && R <=8) {
 valid = 0; //reset valid to false
 
 do {
-scanf(" %c", &character);
+
 //Converted the input into array form
-int C  = rand() % (max_C - 2 + 1) + 2;   
+C  = rand() % (max_C - 2 + 1) + 2;  
+printf("C IS: %d \n", C );
 if (C >= 2 && C <= 11) {
     valid = 1;
 } else {
@@ -290,7 +294,7 @@ if (C >= 2 && C <= 11) {
 }
 } while (!valid);
 valid = 0;
-if (!check_empty_spot(board, R, C)) {
+if (!check_empty_spot(bot_board, R, C)) {
   
     valid = 0;
 } else {
@@ -312,7 +316,7 @@ char input;
 //printf("Enter L, R, U or D: ");
 
 int upper_bound = 4;
-lower_bound = 1;
+int lower_bound = 1;
 do {
     //scanf(" %c", &input);
     int value = rand() % (upper_bound - lower_bound + 1) 
@@ -371,10 +375,11 @@ do {
    // printf("\n \n R: %d END R: %d C: %d END C: %d", R, end_R, C, end_C);
 } while (!valid);
 
-validate_orientation(board, R, C, end_R, end_C, input);
+validate_orientation(bot_board, R, C, end_R, end_C, input);
 
 
 print_board(bot_board);
+printf("One loop..");
 }//FOR LOOP
     
 }
