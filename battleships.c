@@ -3,7 +3,7 @@
 
 void print_board(char board[10][12]);
 int check_empty_spot(char board[10][12], int row, int column);
-
+int validate_orientation(char board[10][12], int r, int c, int end_R, int end_C);
 
 /* 
  * A simple game of battleships
@@ -56,7 +56,7 @@ printf("Enter a position to mark as your ship. \n");
 
 do {
 
-//input for x must be => 0 AND <= 8
+//input for R must be => 0 AND <= 8
 printf("enter row: ");
 do {
 scanf(" %d", &R);
@@ -66,7 +66,7 @@ if (R >= 0 && R <=8) {
     printf("invalid. Re-enter a correct row: ");
 }
 } while (!valid);
-//input for y must be => 2 AND =< 11
+//input for C must be => 2 AND =< 11
 valid = 0; //reset valid to false
 printf("enter column: ");
 do {
@@ -97,7 +97,7 @@ int end_R = -1;
 char input;
 
 printf("Enter the ships orientation. \n");
-printf("Enter L, R, U or D. \n");
+printf("Enter L, R, U or D: ");
 do {
     scanf(" %c", &input);
     switch (input) {
@@ -124,9 +124,11 @@ do {
     }
 } while (!valid);
 
+validate_orientation(board, R, C, end_R, end_C);
+
 
 print_board(board);
-}
+}//FOR LOOP
 
 return 0;
 }
@@ -152,4 +154,29 @@ int check_empty_spot(char board[10][12], int row, int column) {
     
 }
 
-//int validate_orientation
+int validate_orientation(char board[10][12], int r, int c, int end_R, int end_C) {
+    
+    char temp_arr[10][12] = {'\0'};
+    	for (int r = 0; r < 10; r++) {
+			for (int c = 0; c < 12; c++) {
+				temp_arr[r][c] = board[r][c];
+			}
+		}
+		//input for R must be => 0 AND <= 8
+		if (!(end_R >= 0 && end_R <= 8 ) || !(end_C >= 2 && end_C <= 11)) {
+		    printf("This orientation makes the ship fall off the board.");
+		    printf("%d", end_R);
+		    printf("%d", end_C);
+		    return 0;
+		} 
+		
+		temp_arr[end_R][end_C] = 'X';
+		printf("cloned: \n");
+		print_board(temp_arr);
+		
+    
+    
+    
+    
+    
+}
