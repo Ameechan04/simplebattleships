@@ -158,9 +158,6 @@ do {
 }
 } while (!valid);
 
-//validate_orientation(board, R, C, end_R, end_C, input);
-
-
 print_board(board);
 }//FOR LOOP
 
@@ -173,12 +170,31 @@ int bot_X_counter;
 int X_counter;     
 do {
     if (player = 1) {
-        
-        //TODO input validation and conversion
-        printf("Enter the target row!");
-        scanf("%d", target_row);
-        printf("Enter the target column!");
-        scanf("%d", target_column);
+        printf("HUMAN TURN!");
+       do {
+            scanf(" %d", &target_row);
+            //convert row entered into usable format for the 2D array:
+            target_row = 9 - target_row;
+            if (R >= 0 && R <=8) {
+                valid = 1;
+            } else {
+                printf("invalid. Re-enter a correct row: ");
+            }
+    } while (!valid);
+    //input for C must be => 2 AND =< 11
+    valid = 0; //reset valid to false
+    printf("enter column: ");
+    do {
+        scanf(" %c", &character);
+        //Converted the input into array form
+        target_column = target_column - 63;  
+        if (C >= 2 && C <= 11) {
+            valid = 1;
+        } else {
+            printf("invalid. Re-enter a correct column: ");
+        }
+    } while (!valid);
+    valid = 0;
         shoot(target_row, target_column, bot_board);    //human shoots at bot board
         
     } else {
