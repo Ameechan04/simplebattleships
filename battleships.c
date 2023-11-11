@@ -16,7 +16,7 @@ void ai_create_board(char bot_board[10][12]);
  
 
 int main (void) {
- srand(time(NULL));
+     srand(time(NULL));
     int rows = 10;
     int columns = 12;
     int valid = 0;
@@ -162,8 +162,58 @@ do {
 print_board(board);
 }//FOR LOOP
 
+
+int game_over = 0;
+int player = 1; //player 1 = human
+int target_row;
+int target_column;
+int bot_X_counter;
+int X_counter;     
+do {
+    if (player = 1) {
+        
+        //TODO input validation and conversion
+        printf("Enter the target row!");
+        scanf(%d, target_row);
+        printf("Enter the target column!");
+        scanf(%d, target_column);
+        shoot(target_row, target_column, bot_board);    //human shoots at bot board
+        
+    } else {
+        target_row = rand() % (8 + 1); 
+        target_column  = rand() % (11 - 2 + 1) + 2;
+        shoot(target_row, target_column, board);    //bot shoots at human board
+    }
+    X_counter = 0;
+    bot_X_counter = 0;
+    for (int r = 0; r < 10; r++) {
+		for (int c = 0; c < 12; c++) {
+			if (board[r][c] == X) {
+			    X_counter++;
+			}
+			if (bot_board[r][c] == X) {
+			    bot_X_counter++;
+			}
+		}
+	}
+	
+	if (bot_X_counter == 0) {
+	    game_over = 1;
+	    printf("THE BOT IS VICTORIOUS!")
+	}
+	if (X_counter == 0) {
+	    game_over = 1;
+	    printf("YOU ARE VICTORIOUS!")
+	}
+    
+    
+    
+    
+} while (!game_over);
+
+
 return 0;
-}
+} //END OF MAIN
 void print_board(char B[10][12]) {
     printf("\n \n");
     for (int r = 0; r < 10; r++) {
@@ -385,5 +435,18 @@ do {
 print_board(bot_board);
 printf("One loop..");
 }//FOR LOOP
+    
+}
+
+int shoot(int row, int column, int b[10][12]) {
+    if (b[row][column] == 'X') {
+        //target hit then:
+        printf("\n The shot at %d %d was a hit! \n", row, column);
+        b[row][column] = 'H';
+        return 1;
+    } else {
+        printf("\n MISS! \n");
+        return 0;
+    }
     
 }
