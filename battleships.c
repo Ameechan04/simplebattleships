@@ -1,28 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void print_board(char board[10][12]) {
-    printf("\n \n");
-    for (int r = 0; r < 10; r++) {
-			for (int c = 0; c < 12; c++) {
-				printf("%c", board[r][c]);
-			}
-			printf("\n");
-		}
-		printf("\n");
-    
+void print_board(char board[10][12]);
+int check_empty_spot(char board[10][12], int row, int column);
 
-}
-
-int check_empty_spot(char board[10][12], int row, int column) {
-    if (board[row][column] != 'X')   {
-        //empty board position
-        return 1;   //returns true if empty
-     } else {
-         return 0;
-     }
-    
-}
 
 /* 
  * A simple game of battleships
@@ -33,7 +14,6 @@ int check_empty_spot(char board[10][12], int row, int column) {
  */
  
 
-//#include "functions.h"
 int main (void) {
     int rows = 10;
     int columns = 12;
@@ -114,4 +94,25 @@ print_board(board);
 }
 
 return 0;
+}
+void print_board(char board[10][12]) {
+    printf("\n \n");
+    for (int r = 0; r < 10; r++) {
+			for (int c = 0; c < 12; c++) {
+				printf("%c", board[r][c]);
+			}
+			printf("\n");
+		}
+		printf("\n");
+    
+
+}
+int check_empty_spot(char board[10][12], int row, int column) {
+    if (board[row][column] != 'X')   {
+        //empty board position
+        return 1;   //returns true if empty
+     } else {
+         return 0;
+     }
+    
 }
