@@ -16,6 +16,7 @@ void ai_create_board(char bot_board[10][12]);
  
 
 int main (void) {
+ srand(time(NULL));
     int rows = 10;
     int columns = 12;
     int valid = 0;
