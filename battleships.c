@@ -3,7 +3,7 @@
 
 void print_board(char B[10][12]);
 int check_empty_spot(char board[10][12], int row, int column);
-int validate_orientation(char board[10][12], int r, int c, int end_R, int end_C);
+int validate_orientation(char board[10][12], int r, int c, int end_R, int end_C, char orientation);
 
 /* 
  * A simple game of battleships
@@ -124,14 +124,14 @@ do {
         break;
     case 'U':
      printf("R: %d ", R);
-        end_R = R + 2;
+        end_R = R - 2;
           end_C = C;
         valid = 1;
            printf("END R: %d", end_R);
         break;
     case 'D':
         printf("R: %d ", R);
-        end_R = R - 2;
+        end_R = R + 2;
           end_C = C;
         valid = 1;
            printf("END R: %d", end_R);
@@ -144,7 +144,7 @@ do {
     printf("\n \n R: %d END R: %d C: %d END C: %d", R, end_R, C, end_C);
 } while (!valid);
 
-validate_orientation(board, R, C, end_R, end_C);
+validate_orientation(board, R, C, end_R, end_C, input);
 
 
 print_board(board);
@@ -174,49 +174,72 @@ int check_empty_spot(char board[10][12], int row, int column) {
     
 }
 
-int validate_orientation(char board[10][12], int r, int c, int end_R, int end_C) {
+int validate_orientation(char board[10][12], int R, int C, int end_R, int end_C, char orientation) {
     
     char temp_arr[10][12] = {'\0'};
-    	for (int r = 0; r < 10; r++) {
-			for (int c = 0; c < 12; c++) {
-				temp_arr[r][c] = board[r][c];
+    	for (int R = 0; R < 10; R++) {
+			for (int C = 0; C < 12; C++) {
+				temp_arr[R][C] = board[R][C];
 			}
 		}
 		//input for R must be => 0 AND <= 8
-		/*
-		if ((end_C >= 2 && end_C <= 11)) {
+		if ((end_C >= 2 && end_C <= 11) && (end_R >= 0 && end_R <= 8)) {
 		    
 		    //VALID!
 		    printf("changing...");
-		    	temp_arr[end_R][end_C] = 'X';
+		    	
+		    	if (board[end_R][end_C] == 'X') {
+		    	    printf("Space is already occupied! 0");
+		    	    return 0;
+		    	}
+		    	board[end_R][end_C] = 'X';
+		    	switch (orientation) {
+		    	    case 'L':   
+		    	          
+		    	          	if (board[R][C - 1] == 'X') {
+		    	                printf("Space is already occupied! 1");
+		    	                return 0;
+		                	}
+		                	 board[R][C - 1] = 'X';
+		                	break;
+		    	    case 'R':   
+		    	           
+		    	            if (board[R][C + 1] == 'X') {
+		    	                printf("Space is already occupied! 2");
+		    	                return 0;
+		                	}
+		                	 board[R][C + 1] = 'X';
+		    	           break;
+		    	    case 'U':
+		    	            
+		    	          
+		    	            if (board[R - 1][C] == 'X') {
+		    	                printf("Space is already occupied! 3");
+		    	                return 0;
+		                	}
+		                	  board[R - 1][C] = 'X';
+		    	           break;
+		    	    case 'D':  
+		    	    
+		    	            
+		    	            	if (board[R + 1][C] == 'X') {
+		    	                printf("Space is already occupied! 4");
+		    	                return 0;
+		                	}
+		                	board[R + 1][C] = 'X';
+		    	           break;
+		    	    default:
+		    	        printf("something went wrong !");
+		    	    
+		    	}
 		    
-		printf("cloned: \n");
-		print_board(temp_arr);
-		    
+		    return 1;
 		}  else {
 		    printf("This orientation makes the ship fall off the board.");
-		    printf("%d", end_R);
-		    printf("%d", end_C);
 		    return 0;
 		    
 		}
-		*/
-			
-		//	board[2][2] = '!';
-		//	print_board(board);
-			
-			temp_arr[end_R][end_C] = 'S';
-				temp_arr[5][4] = 'H';
-			//		temp_arr[5][3] = 'S';
-			print_board(temp_arr);
-
-		return 1;
-	
 		
-    
-    
-    
-    
-    
+
 }
 
