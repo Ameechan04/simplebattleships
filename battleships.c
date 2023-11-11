@@ -1,3 +1,29 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+void print_board(char board[10][12]) {
+    printf("\n \n");
+    for (int r = 0; r < 10; r++) {
+			for (int c = 0; c < 12; c++) {
+				printf("%c", board[r][c]);
+			}
+			printf("\n");
+		}
+		printf("\n");
+    
+
+}
+
+int check_empty_spot(char board[10][12], int row, int column) {
+    if (board[row][column] != 'X')   {
+        //empty board position
+        return 1;   //returns true if empty
+     } else {
+         return 0;
+     }
+    
+}
+
 /* 
  * A simple game of battleships
  * Author: Andrew Meeehan <andrew.meechan.2022@uni.strath.ac.uk>
@@ -6,8 +32,7 @@
  * Last updated: 07/10/23
  */
  
-#include <stdio.h>
-#include <stdlib.h>
+
 //#include "functions.h"
 int main (void) {
     int rows = 10;
@@ -46,7 +71,10 @@ int main (void) {
 		}
 		*/
 		
+for (int i = 0; i < 3; i++) {
 printf("Enter a position to mark as your ship. \n");
+
+do {
 
 //input for x must be => 0 AND <= 8
 printf("enter row: ");
@@ -69,24 +97,21 @@ if (C >= 2 && C <= 11) {
     printf("invalid. Re-enter a correct column: ");
 }
 } while (!valid);
+valid = 0;
+if (!check_empty_spot(board, R, C)) {
+    printf("\n The selected spot is already taken. \n");
+    valid = 0;
+} else {
+    valid = 1;
+}
+} while (!valid);
+
+
 
 board[R][C] = 'X';
 
 print_board(board);
-
-
-return 0;
 }
 
-void print_board(char board[10][12]) {
-    printf("\n \n");
-    for (int r = 0; r < 10; r++) {
-			for (int c = 0; c < 12; c++) {
-				printf("%c", board[r][c]);
-			}
-			printf("\n");
-		}
-		printf("\n");
-    
-
+return 0;
 }
