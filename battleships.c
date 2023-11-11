@@ -50,7 +50,7 @@ char bot_board[10][12] =
 
 
 
- printf("\n SIMPLE CHESS BY ANDREW MEECHAN \n \n");
+ printf("\n SIMPLE BATTLESHIPS BY ANDREW MEECHAN \n \n");
 
   print_board(board);
 
@@ -122,42 +122,40 @@ do {
     scanf(" %c", &input);
     switch (input) {
     case 'L':
-        printf("C: %d ", C);
         end_C = C - 2;
         end_R = R;
         valid = 1;
-        printf("END C: %d", end_C);
         break;
     case 'R':
-         printf("C: %d ", C);
         end_C = C + 2;
         end_R = R;
         valid = 1;
-        printf("END C: %d", end_C);
         break;
     case 'U':
-     printf("R: %d ", R);
         end_R = R - 2;
           end_C = C;
         valid = 1;
-           printf("END R: %d", end_R);
         break;
     case 'D':
-        printf("R: %d ", R);
+       
         end_R = R + 2;
           end_C = C;
         valid = 1;
-           printf("END R: %d", end_R);
         break;
     default:
         printf("Invalid. Enter L, R, U or D: ");
         valid = 0;
         break;
 }
-    printf("\n \n R: %d END R: %d C: %d END C: %d", R, end_R, C, end_C);
+    if (!validate_orientation(board, R, C, end_R, end_C, input)) {
+    printf("The orientation %c is invalid. Enter another: ", input);
+    valid = 0;
+} else {
+    valid = 1;
+}
 } while (!valid);
 
-validate_orientation(board, R, C, end_R, end_C, input);
+//validate_orientation(board, R, C, end_R, end_C, input);
 
 
 print_board(board);
@@ -372,10 +370,15 @@ do {
         valid = 0;
         break;
 }
-   // printf("\n \n R: %d END R: %d C: %d END C: %d", R, end_R, C, end_C);
+  if (!validate_orientation(bot_board, R, C, end_R, end_C, input)) {
+    printf("The orientation %c is invalid. Enter another: ", input);
+    valid = 0;
+} else {
+    valid = 1;
+}
 } while (!valid);
 
-validate_orientation(bot_board, R, C, end_R, end_C, input);
+//validate_orientation(bot_board, R, C, end_R, end_C, input);
 
 
 print_board(bot_board);
