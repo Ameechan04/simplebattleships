@@ -18,7 +18,7 @@ int main (void) {
     int rows = 10;
     int columns = 12;
     int valid = 0;
-    
+    char character;
     int R, C;
  //Create the board
  char board[10][12] = 
@@ -58,8 +58,11 @@ do {
 
 //input for R must be => 0 AND <= 8
 printf("enter row: ");
+
 do {
 scanf(" %d", &R);
+//convert row entered into usable format for the 2D array:
+R = 9 - R;
 if (R >= 0 && R <=8) {
     valid = 1;
 } else {
@@ -69,8 +72,12 @@ if (R >= 0 && R <=8) {
 //input for C must be => 2 AND =< 11
 valid = 0; //reset valid to false
 printf("enter column: ");
+
+
 do {
-scanf(" %d", &C);
+scanf(" %c", &character);
+//Converted the input into array form
+ C = character - 63;  
 if (C >= 2 && C <= 11) {
     valid = 1;
 } else {
@@ -180,3 +187,4 @@ int validate_orientation(char board[10][12], int r, int c, int end_R, int end_C)
     
     
 }
+
