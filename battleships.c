@@ -50,22 +50,13 @@ char bot_board[10][12] =
 		{' ', ' ', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'}};	//9
 
  ai_create_board(bot_board);
-
+print_board(bot_board);
 
 
  printf("\n SIMPLE BATTLESHIPS BY ANDREW MEECHAN \n \n");
 
   print_board(board);
 
- //print the board
- /*
-		for (int r = 0; r < 10; r++) {
-			for (int c = 0; c < 12; c++) {
-				printf("%c", board[r][c]);
-			}
-			printf("\n");
-		}
-		*/
 		
 for (int i = 0; i < 2; i++) {
 printf("Enter a position to mark as your ship. \n");
@@ -168,7 +159,6 @@ int target_row;
 int target_column;
 int bot_X_counter;
 int X_counter;     
-printf("reached!");
 valid = 0;
 do {
     if (player = 1) {
@@ -275,7 +265,6 @@ int validate_orientation(char board[10][12], int R, int C, int end_R, int end_C,
 		if ((end_C >= 2 && end_C <= 11) && (end_R >= 0 && end_R <= 8)) {
 		    
 		    //VALID!
-		    printf("changing...");
 		    	
 		    	if (board[end_R][end_C] == 'X') {
 		    	    printf("Space is already occupied! 0");
@@ -348,7 +337,6 @@ do {
 do {
 //convert row entered into usable format for the 2D array:
   R = rand() % (max_R + 1); 
-  printf("R IS: %d \n", R );
 if (R >= 0 && R <=8) {
     valid = 1;
 } else {
@@ -362,7 +350,6 @@ do {
 
 //Converted the input into array form
 C  = rand() % (max_C - 2 + 1) + 2;  
-printf("C IS: %d \n", C );
 if (C >= 2 && C <= 11) {
     valid = 1;
 } else {
@@ -378,23 +365,14 @@ if (!check_empty_spot(bot_board, R, C)) {
 }
 } while (!valid);
 
-
-
-
-
 bot_board[R][C] = 'X';
 valid = 0;
 int end_C = -1;
 int end_R = -1;
 char input;
-
-//printf("Enter the ships orientation. \n");
-//printf("Enter L, R, U or D: ");
-
 int upper_bound = 4;
 int lower_bound = 1;
 do {
-    //scanf(" %c", &input);
     int value = rand() % (upper_bound - lower_bound + 1) 
                     + lower_bound; 
                     
@@ -444,19 +422,17 @@ do {
          
         break;
     default:
-        printf("Invalid. Enter L, R, U or D: ");
         valid = 0;
         break;
 }
   if (!validate_orientation(bot_board, R, C, end_R, end_C, input)) {
-    printf("The orientation %c is invalid. Enter another: ", input);
     valid = 0;
 } else {
     valid = 1;
 }
 } while (!valid);
 
-print_board(bot_board);
+
 
 }//FOR LOOP
     
