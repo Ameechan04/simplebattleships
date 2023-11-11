@@ -67,7 +67,7 @@ char bot_board[10][12] =
 		}
 		*/
 		
-for (int i = 0; i < 5; i++) {
+for (int i = 0; i < 2; i++) {
 printf("Enter a position to mark as your ship. \n");
 
 do {
@@ -168,10 +168,13 @@ int target_row;
 int target_column;
 int bot_X_counter;
 int X_counter;     
+printf("reached!");
+valid = 0;
 do {
     if (player = 1) {
-        printf("HUMAN TURN!");
-       do {
+        printf("\nHUMAN TURN! \n");
+        printf("enter target row: ");
+        do {
             scanf(" %d", &target_row);
             //convert row entered into usable format for the 2D array:
             target_row = 9 - target_row;
@@ -180,28 +183,34 @@ do {
             } else {
                 printf("invalid. Re-enter a correct row: ");
             }
-    } while (!valid);
-    //input for C must be => 2 AND =< 11
-    valid = 0; //reset valid to false
-    printf("enter column: ");
-    do {
-        scanf(" %c", &character);
-        //Converted the input into array form
-        target_column = target_column - 63;  
-        if (C >= 2 && C <= 11) {
-            valid = 1;
-        } else {
-            printf("invalid. Re-enter a correct column: ");
-        }
-    } while (!valid);
-    valid = 0;
+        } while (!valid);
+        //input for C must be => 2 AND =< 11
+        valid = 0; //reset valid to false
+        printf("enter column: ");
+        do {
+            scanf(" %c", &character);
+            //Converted the input into array form
+            target_column = target_column - 63;  
+            if (C >= 2 && C <= 11) {
+                valid = 1;
+            } else {
+                printf("invalid. Re-enter a correct column: ");
+            }
+        } while (!valid);
+        valid = 0;
         shoot(target_row, target_column, bot_board);    //human shoots at bot board
-        
-    } else {
+        player = 2;
+    } 
+    
+    if (player = 2) {
+        printf("\n BOT TURN! \n");
         target_row = rand() % (8 + 1); 
         target_column  = rand() % (11 - 2 + 1) + 2;
         shoot(target_row, target_column, board);    //bot shoots at human board
+        player = 1;
     }
+    
+    
     X_counter = 0;
     bot_X_counter = 0;
     for (int r = 0; r < 10; r++) {
