@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void print_board(char board[10][12]);
+void print_board(char B[10][12]);
 int check_empty_spot(char board[10][12], int row, int column);
 int validate_orientation(char board[10][12], int r, int c, int end_R, int end_C);
 
@@ -108,27 +108,40 @@ printf("Enter L, R, U or D: ");
 do {
     scanf(" %c", &input);
     switch (input) {
-        case 'L':
-            end_C = C - 2;
-            valid = 1;
-            break;
-        case 'R':
-            end_C = C + 2;
-            valid = 1;
-            break;
-        case 'U':
-            end_R = R + 2;
-            valid = 1;
-            break;
-        case 'D':
-           end_R = R - 2;
-           valid = 1;
-           break;
-        default:
-            printf("Invalid. Enter L, R, U or D: ");
-            valid = 0;
-            break;
-    }
+    case 'L':
+        printf("C: %d ", C);
+        end_C = C - 2;
+        end_R = R;
+        valid = 1;
+        printf("END C: %d", end_C);
+        break;
+    case 'R':
+         printf("C: %d ", C);
+        end_C = C + 2;
+        end_R = R;
+        valid = 1;
+        printf("END C: %d", end_C);
+        break;
+    case 'U':
+     printf("R: %d ", R);
+        end_R = R + 2;
+          end_C = C;
+        valid = 1;
+           printf("END R: %d", end_R);
+        break;
+    case 'D':
+        printf("R: %d ", R);
+        end_R = R - 2;
+          end_C = C;
+        valid = 1;
+           printf("END R: %d", end_R);
+        break;
+    default:
+        printf("Invalid. Enter L, R, U or D: ");
+        valid = 0;
+        break;
+}
+    printf("\n \n R: %d END R: %d C: %d END C: %d", R, end_R, C, end_C);
 } while (!valid);
 
 validate_orientation(board, R, C, end_R, end_C);
@@ -139,11 +152,11 @@ print_board(board);
 
 return 0;
 }
-void print_board(char board[10][12]) {
+void print_board(char B[10][12]) {
     printf("\n \n");
     for (int r = 0; r < 10; r++) {
 			for (int c = 0; c < 12; c++) {
-				printf("%c", board[r][c]);
+				printf("%c", B[r][c]);
 			}
 			printf("\n");
 		}
@@ -170,16 +183,35 @@ int validate_orientation(char board[10][12], int r, int c, int end_R, int end_C)
 			}
 		}
 		//input for R must be => 0 AND <= 8
-		if (!(end_R >= 0 && end_R <= 8 ) || !(end_C >= 2 && end_C <= 11)) {
+		/*
+		if ((end_C >= 2 && end_C <= 11)) {
+		    
+		    //VALID!
+		    printf("changing...");
+		    	temp_arr[end_R][end_C] = 'X';
+		    
+		printf("cloned: \n");
+		print_board(temp_arr);
+		    
+		}  else {
 		    printf("This orientation makes the ship fall off the board.");
 		    printf("%d", end_R);
 		    printf("%d", end_C);
 		    return 0;
-		} 
-		
-		temp_arr[end_R][end_C] = 'X';
-		printf("cloned: \n");
-		print_board(temp_arr);
+		    
+		}
+		*/
+			
+		//	board[2][2] = '!';
+		//	print_board(board);
+			
+			temp_arr[end_R][end_C] = 'S';
+				temp_arr[5][4] = 'H';
+			//		temp_arr[5][3] = 'S';
+			print_board(temp_arr);
+
+		return 1;
+	
 		
     
     
