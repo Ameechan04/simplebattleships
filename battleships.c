@@ -12,6 +12,7 @@
 int main (void) {
     int rows = 10;
     int columns = 12;
+    int valid = 0;
     
     int R, C;
  //Create the board
@@ -49,10 +50,26 @@ printf("Enter a position to mark as your ship. \n");
 
 //input for x must be => 0 AND <= 8
 printf("enter row: ");
+do {
 scanf(" %d", &R);
+if (R >= 0 && R <=8) {
+    valid = 1;
+} else {
+    printf("invalid. Re-enter a correct row: ");
+}
+} while (!valid);
 //input for y must be => 2 AND =< 11
+valid = 0; //reset valid to false
 printf("enter column: ");
+do {
 scanf(" %d", &C);
+if (C >= 2 && C <= 11) {
+    valid = 1;
+} else {
+    printf("invalid. Re-enter a correct column: ");
+}
+} while (!valid);
+
 board[R][C] = 'X';
 
 print_board(board);
