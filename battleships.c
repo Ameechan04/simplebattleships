@@ -5,8 +5,9 @@
 void print_board(char B[10][12]);
 int check_empty_spot(char board[10][12], int row, int column);
 int validate_orientation(char board[10][12], int r, int c, int end_R, int end_C, char orientation);
-void ai_create_board(char bot_board[10][12]);
+void ai_create_board(char bot_board[10][12], int ship_count);
 int shoot(int row, int column, char b[10][12]);
+//void create_board(char b[10][12]);
 
 /* 
  * A simple game of battleships
@@ -24,9 +25,10 @@ int main (void) {
     int valid = 0;
     char character;
     int R, C;
+    int ship_count;
  //Create the board
- char board[10][12] = 
-        {{'9', ' ', '\0', '\0','\0','\0','\0','\0','\0','\0', '\0'},	//0
+ char board[10][12] =  
+       {{'9', ' ', '\0', '\0','\0','\0','\0','\0','\0','\0', '\0'},	//0
         {'8', ' ','\0','\0','\0','\0','\0','\0','\0', '\0', '\0'},	//1
 	    {'7', ' ', '\0','\0','\0','\0','\0','\0','\0', '\0', '\0'},	//2
 		{'6', ' ', '\0', '\0','\0','\0','\0','\0','\0','\0', '\0'},	//3
@@ -34,8 +36,9 @@ int main (void) {
 		{'4', ' ', '\0', '\0','\0','\0','\0','\0','\0','\0', '\0'},	//5
 		{'3', ' ', '\0', '\0','\0','\0','\0','\0','\0','\0', '\0'},	//6
 		{'2', ' ', '\0', '\0','\0','\0','\0','\0','\0','\0', '\0'},	//7
-	 {'1', ' ', '\0', '\0','\0','\0','\0','\0','\0','\0', '\0'},	//8
+	    {'1', ' ', '\0', '\0','\0','\0','\0','\0','\0','\0', '\0'},	//8
 		{' ', ' ', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'}};	//9
+
 
 char bot_board[10][12] = 
         {{'9', ' ', '\0', '\0','\0','\0','\0','\0','\0','\0', '\0'},	//0
@@ -46,19 +49,36 @@ char bot_board[10][12] =
 		{'4', ' ', '\0', '\0','\0','\0','\0','\0','\0','\0', '\0'},	//5
 		{'3', ' ', '\0', '\0','\0','\0','\0','\0','\0','\0', '\0'},	//6
 		{'2', ' ', '\0', '\0','\0','\0','\0','\0','\0','\0', '\0'},	//7
-	 {'1', ' ', '\0', '\0','\0','\0','\0','\0','\0','\0', '\0'},	//8
+	    {'1', ' ', '\0', '\0','\0','\0','\0','\0','\0','\0', '\0'},	//8
 		{' ', ' ', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'}};	//9
 
- ai_create_board(bot_board);
+
+
+
+printf("\nSIMPLE BATTLESHIPS BY ANDREW MEECHAN \n \n");
+printf("enter how many ships you wish to have on the board: ");
+do {
+    valid = 0;
+    scanf("%d", &ship_count);
+    if (ship_count < 1) {
+        printf("The ship count is too low! Re-enter: ");
+    } else if (ship_count > 10) {
+        printf("The ship count is too large! Re-enter: ");
+    } else {
+        valid = 1;
+    }
+    
+} while (!valid);
+valid = 0;
+
+ai_create_board(bot_board, ship_count);
+printf("AI BOARD: \n");
 print_board(bot_board);
+print_board(board);
 
 
- printf("\n SIMPLE BATTLESHIPS BY ANDREW MEECHAN \n \n");
 
-  print_board(board);
-
-		
-for (int i = 0; i < 2; i++) {
+for (int i = 0; i < ship_count; i++) {
 printf("Enter a position to mark as your ship. \n");
 
 do {
@@ -161,14 +181,14 @@ int bot_X_counter;
 int X_counter;     
 valid = 0;
 do {
-    if (player = 1) {
+    if (player == 1) {
         printf("\nHUMAN TURN! \n");
         printf("enter target row: ");
         do {
             scanf(" %d", &target_row);
             //convert row entered into usable format for the 2D array:
             target_row = 9 - target_row;
-            if (R >= 0 && R <=8) {
+            if (target_row >= 0 && target_row <=8) {
                 valid = 1;
             } else {
                 printf("invalid. Re-enter a correct row: ");
@@ -180,8 +200,8 @@ do {
         do {
             scanf(" %c", &character);
             //Converted the input into array form
-            target_column = target_column - 63;  
-            if (C >= 2 && C <= 11) {
+            target_column = character - 63;  // 
+            if (target_column >= 2 && target_column <= 11) {
                 valid = 1;
             } else {
                 printf("invalid. Re-enter a correct column: ");
@@ -192,8 +212,8 @@ do {
         player = 2;
     } 
     
-    if (player = 2) {
-        printf("\n BOT TURN! \n");
+    if (player == 2) {
+        printf("\nBOT TURN! \n");
         target_row = rand() % (8 + 1); 
         target_column  = rand() % (11 - 2 + 1) + 2;
         shoot(target_row, target_column, board);    //bot shoots at human board
@@ -214,11 +234,11 @@ do {
 		}
 	}
 	
-	if (bot_X_counter == 0) {
+	if (X_counter == 0) {
 	    game_over = 1;
 	    printf("THE BOT IS VICTORIOUS!");
 	}
-	if (X_counter == 0) {
+	if (bot_X_counter == 0) {
 	    game_over = 1;
 	    printf("YOU ARE VICTORIOUS!");
 	}
@@ -232,7 +252,7 @@ do {
 return 0;
 } //END OF MAIN
 void print_board(char B[10][12]) {
-    printf("\n \n");
+
     for (int r = 0; r < 10; r++) {
 			for (int c = 0; c < 12; c++) {
 				printf("%c", B[r][c]);
@@ -321,12 +341,13 @@ int validate_orientation(char board[10][12], int R, int C, int end_R, int end_C,
 
 }
 
-void ai_create_board(char bot_board[10][12]) {
+void ai_create_board(char bot_board[10][12], int ship_count) {
     int max_R = 8;
     int max_C = 11;
     int valid = 0;
     int R, C;
-    for (int i = 0; i < 5; i++) {
+    
+    for (int i = 0; i < ship_count; i++) {
     
 do {
     
@@ -441,7 +462,7 @@ do {
 int shoot(int row, int column, char b[10][12]) {
     if (b[row][column] == 'X') {
         //target hit then:
-        printf("\n The shot at %d %d was a hit! \n", row, column);
+        printf("\n The shot at %d %d was a hit! \n", 9 + row, column);
         b[row][column] = 'H';
         return 1;
     } else {
@@ -450,3 +471,4 @@ int shoot(int row, int column, char b[10][12]) {
     }
     
 }
+
