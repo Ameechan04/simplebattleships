@@ -73,9 +73,13 @@ valid = 0;
 
 ai_create_board(bot_board, ship_count);
 
+	//DISABLE THE COMMENTS BELOW TO VIEW THE BOT'S BOARD FOR DEBUGGING:
+
+/*
 printf("AI BOARD: \n");
 print_board(bot_board);
 
+*/
 printf("\n\n");
 print_board(board);
 
