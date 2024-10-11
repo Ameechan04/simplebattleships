@@ -1,5 +1,10 @@
 # simplebattleships
-Simple game of battleships made in C for fun
+HOW TO RUN:
+Due to C compiling differently on different devices, I strongly urge the user to copy the C files contents into the #Online #C #Compiler found here:
+https://www.programiz.com/c-programming/online-compiler/
 
+This ensures that functionality remains consistent across devices.
 
-To verify that the ships do not overlap, a function will be made. I this function, the entrire array will be copied into the temp_arr. Then if the vaidation fails, it will exit and return false. If it works then it will copy the temporary array into the real array and return true.
+It is for this same reason that a header file has not been used as it cannot be added to the C compiler.
+
+I hope you enjoy trying out this simple project.
