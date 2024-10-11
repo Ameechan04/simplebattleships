@@ -4,7 +4,7 @@
 
 void print_board(char B[10][12]);
 int check_empty_spot(char board[10][12], int row, int column);
-int validate_orientation(char board[10][12], int r, int c, int end_R, int end_C, char orientation);
+int validate_orientation(char board[10][12], int r, int c, int end_R, int end_C, char orientation, int ai_mode);
 void ai_create_board(char bot_board[10][12], int ship_count);
 int shoot(int row, int column, char b[10][12]);
 //void create_board(char b[10][12]);
@@ -14,7 +14,7 @@ int shoot(int row, int column, char b[10][12]);
  * Author: Andrew Meeehan <andrew.meechan.2022@uni.strath.ac.uk>
  * Program is to create a 2D Array to represent a battleship board for two players
  * Each turn the player will choose a target to shoot at and will be told if it hits or not
- * Last updated: 07/10/23
+ * Last updated: 11/10/24
  */
  
 
@@ -72,8 +72,11 @@ do {
 valid = 0;
 
 ai_create_board(bot_board, ship_count);
+
 printf("AI BOARD: \n");
 print_board(bot_board);
+
+printf("\n\n");
 print_board(board);
 
 
@@ -161,7 +164,7 @@ do {
         valid = 0;
         break;
 }
-    if (!validate_orientation(board, R, C, end_R, end_C, input)) {
+    if (!validate_orientation(board, R, C, end_R, end_C, input, 0)) {
     printf("The orientation %c is invalid. Enter another: ", input);
     valid = 0;
 } else {
@@ -273,7 +276,7 @@ int check_empty_spot(char board[10][12], int row, int column) {
     
 }
 
-int validate_orientation(char board[10][12], int R, int C, int end_R, int end_C, char orientation) {
+int validate_orientation(char board[10][12], int R, int C, int end_R, int end_C, char orientation, int ai_mode) {
     
     char temp_arr[10][12] = {'\0'};
     	for (int R = 0; R < 10; R++) {
@@ -286,8 +289,12 @@ int validate_orientation(char board[10][12], int R, int C, int end_R, int end_C,
 		    
 		    //VALID!
 		    	
+		    	
 		    	if (board[end_R][end_C] == 'X') {
-		    	    printf("Space is already occupied! 0");
+		    	    if (ai_mode == 0) {
+    		    	    printf("Space is already occupied! 0");
+    		    	}
+		    	    
 		    	    return 0;
 		    	}
 		    	board[end_R][end_C] = 'X';
@@ -295,7 +302,9 @@ int validate_orientation(char board[10][12], int R, int C, int end_R, int end_C,
 		    	    case 'L':   
 		    	          
 		    	          	if (board[R][C - 1] == 'X') {
-		    	                printf("Space is already occupied! 1");
+		    	          	    if (ai_mode == 0) {
+		    	                    printf("Space is already occupied! 1");
+		    	          	    }
 		    	                return 0;
 		                	}
 		                	 board[R][C - 1] = 'X';
@@ -303,7 +312,9 @@ int validate_orientation(char board[10][12], int R, int C, int end_R, int end_C,
 		    	    case 'R':   
 		    	           
 		    	            if (board[R][C + 1] == 'X') {
-		    	                printf("Space is already occupied! 2");
+		    	                if (ai_mode == 0) {
+		    	                    printf("Space is already occupied! 2");
+		    	                }
 		    	                return 0;
 		                	}
 		                	 board[R][C + 1] = 'X';
@@ -312,7 +323,9 @@ int validate_orientation(char board[10][12], int R, int C, int end_R, int end_C,
 		    	            
 		    	          
 		    	            if (board[R - 1][C] == 'X') {
-		    	                printf("Space is already occupied! 3");
+		    	                if (ai_mode == 0) {
+		    	                    printf("Space is already occupied! 3");
+		    	                }
 		    	                return 0;
 		                	}
 		                	  board[R - 1][C] = 'X';
@@ -321,7 +334,9 @@ int validate_orientation(char board[10][12], int R, int C, int end_R, int end_C,
 		    	    
 		    	            
 		    	            	if (board[R + 1][C] == 'X') {
-		    	                printf("Space is already occupied! 4");
+		    	            	if (ai_mode == 0) {
+		    	                    printf("Space is already occupied! 4");
+		    	            	}
 		    	                return 0;
 		                	}
 		                	board[R + 1][C] = 'X';
@@ -333,7 +348,9 @@ int validate_orientation(char board[10][12], int R, int C, int end_R, int end_C,
 		    
 		    return 1;
 		}  else {
-		    printf("This orientation makes the ship fall off the board.");
+		    if (ai_mode == 0) {
+		        printf("This orientation makes the ship fall off the board.");
+		    }
 		    return 0;
 		    
 		}
@@ -360,9 +377,7 @@ do {
   R = rand() % (max_R + 1); 
 if (R >= 0 && R <=8) {
     valid = 1;
-} else {
-    printf("invalid. Re-enter a correct row: ");
-}
+} 
 } while (!valid);
 //input for C must be => 2 AND =< 11
 valid = 0; //reset valid to false
@@ -373,9 +388,7 @@ do {
 C  = rand() % (max_C - 2 + 1) + 2;  
 if (C >= 2 && C <= 11) {
     valid = 1;
-} else {
-  //  printf("invalid. Re-enter a correct column: ");
-}
+} 
 } while (!valid);
 valid = 0;
 if (!check_empty_spot(bot_board, R, C)) {
@@ -446,7 +459,7 @@ do {
         valid = 0;
         break;
 }
-  if (!validate_orientation(bot_board, R, C, end_R, end_C, input)) {
+  if (!validate_orientation(bot_board, R, C, end_R, end_C, input, 1)) {
     valid = 0;
 } else {
     valid = 1;
@@ -471,4 +484,3 @@ int shoot(int row, int column, char b[10][12]) {
     }
     
 }
-
