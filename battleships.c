@@ -71,6 +71,7 @@ do {
 } while (!valid);
 valid = 0;
 
+
 ai_create_board(bot_board, ship_count);
 
 	//DISABLE THE COMMENTS BELOW TO VIEW THE BOT'S BOARD FOR DEBUGGING:
@@ -258,6 +259,8 @@ do {
 
 return 0;
 } //END OF MAIN
+
+//nested for loops to print 2D array
 void print_board(char B[10][12]) {
 
     for (int r = 0; r < 10; r++) {
@@ -270,6 +273,8 @@ void print_board(char B[10][12]) {
     
 
 }
+
+//simply checks the passed in array to see if the spot selected has been marked as 'x'
 int check_empty_spot(char board[10][12], int row, int column) {
     if (board[row][column] != 'X')   {
         //empty board position
@@ -280,6 +285,8 @@ int check_empty_spot(char board[10][12], int row, int column) {
     
 }
 
+
+//validates that the ships orientation is valid, that is: 1. the entire ship remains on the board, 2. the ship sections do not overlap with any other
 int validate_orientation(char board[10][12], int R, int C, int end_R, int end_C, char orientation, int ai_mode) {
     
     char temp_arr[10][12] = {'\0'};
@@ -362,6 +369,7 @@ int validate_orientation(char board[10][12], int R, int C, int end_R, int end_C,
 
 }
 
+//automates the board creating and ship placing for the bot user
 void ai_create_board(char bot_board[10][12], int ship_count) {
     int max_R = 8;
     int max_C = 11;
@@ -371,11 +379,8 @@ void ai_create_board(char bot_board[10][12], int ship_count) {
     for (int i = 0; i < ship_count; i++) {
     
 do {
-    
 
 //input for R must be => 0 AND <= 8
-
-
 do {
 //convert row entered into usable format for the 2D array:
   R = rand() % (max_R + 1); 
@@ -476,6 +481,7 @@ do {
     
 }
 
+//Function shoot: uses the passed in row and column values, converts them into array indices and uses that to do a simple check on the board array that was also passed in
 int shoot(int row, int column, char b[10][12]) {
     if (b[row][column] == 'X') {
         //target hit then:
