@@ -1,10 +1,16 @@
-# simplebattleships
-HOW TO RUN:
-Due to C compiling differently on different devices, I strongly urge the user to copy the C files contents into the #Online #C #Compiler found here:
-https://www.programiz.com/c-programming/online-compiler/
+# Simple Battleships in C
+## HOW TO RUN:
 
-This ensures that functionality remains consistent across devices.
+## Recommended - Due to C compiling differently on different devices, the recommended usage is through the online C compiler
+1. Open [battleships.c](https://github.com/Ameechan04/simplebattleships/blob/main/battleships.c)
+2. Click `Copy raw file`
+3. Open [Online C Compiler](https://www.programiz.com/c-programming/online-compiler/)
+4. Paste in the copied and hit run
 
-It is for this same reason that a header file has not been used as it cannot be added to the C compiler.
+## Linux Machine (unstable) using GCC
+1. Open [battleships.c](https://github.com/Ameechan04/simplebattleships/blob/main/battleships.c)
+2. Click `Download raw file`
+3. Open Terminal
+4. Run `gcc -o battleships simplebattleships.c` or equivalent in desired compiler
+5. Execute the compiled code with `./battleships` or equivalent
 
-I hope you enjoy trying out this simple project.
